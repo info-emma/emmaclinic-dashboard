@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import Layout from './components/layout/Layout';
 import Overview from './pages/Overview';
@@ -20,12 +20,7 @@ import { useDataStore } from './store/useDataStore';
 import { useCompareStore } from './store/useCompareStore';
 import { useAuthStore } from './store/useAuthStore';
 import AuthGuard from './components/AuthGuard';
-import ChatBot from './components/chatbot/ChatBot';
-
 function AppRoutes() {
-  const location = useLocation();
-  const isAIPage = location.pathname === '/ai-insights';
-
   return (
     <>
       <Layout>
@@ -53,7 +48,6 @@ function AppRoutes() {
           </Routes>
         </AnimatePresence>
       </Layout>
-      {!isAIPage && <ChatBot />}
     </>
   );
 }
