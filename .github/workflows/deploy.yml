@@ -1,0 +1,52 @@
+name: Deploy to Vercel
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Vercel deployment
+        id: deploy
+        run: |
+          RESPONSE=$(curl -s -X POST "https://api.vercel.com/v13/deployments?teamId=team_7MKy7r2qAU3oyzIS4lwhJ0KS&forceNew=1" \
+            -H "Authorization: Bearer ${{ secrets.VERCEL_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "name": "emma-dashboard",
+              "project": "prj_w1YQhTAZatS3evE0vwd6nzEMx7BA",
+              "target": "production",
+              "gitSource": {
+                "type": "github",
+                "repoId": 1191560838,
+                "ref": "main",
+                "sha": "${{ github.sha }}"
+              }
+            }')
+          echo "Response: $RESPONSE"
+          DEP_ID=$(echo $RESPONSE | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('id',''))")
+          echo "dep_id=$DEP_ID" >> $GITHUB_OUTPUT
+
+      - name: Wait for deployment
+        run: |
+          DEP_ID="${{ steps.deploy.outputs.dep_id }}"
+          echo "Polling deployment $DEP_ID"
+          for i in $(seq 1 20); do
+            sleep 10
+            STATE=$(curl -s "https://api.vercel.com/v13/deployments/$DEP_ID?teamId=team_7MKy7r2qAU3oyzIS4lwhJ0KS" \
+              -H "Authorization: Bearer ${{ secrets.VERCEL_TOKEN }}" \
+              | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('readyState','?'))")
+            echo "[$i] $STATE"
+            if [ "$STATE" = "READY" ]; then
+              echo "Deployed successfully to https://emma-dashboard-psi.vercel.app"
+              exit 0
+            fi
+            if [ "$STATE" = "ERROR" ]; then
+              echo "Deployment failed"
+              exit 1
+            fi
+          done
+          echo "Timeout"
+          exit 1
