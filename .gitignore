@@ -1,0 +1,20 @@
+node_modules/
+dist/
+.env
+*.local
+.DS_Store
+.vercel
+LINE_Seed_Sans_TH_V1.003/
+install.sh
+*n8n*.json
+[B]*.json
+
+# Claude Code local files
+.claude/
+
+# Docs / raw data / screenshots (not source code)
+Login Feature_EMMA.txt
+Minor Change*/
+Raw Data/
+public/*.png
+public/user-manual*.html

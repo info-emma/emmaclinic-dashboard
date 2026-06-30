@@ -1,0 +1,134 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* LINE Seed Sans TH */
+@font-face {
+  font-family: 'LINE Seed Sans TH';
+  src: url('/fonts/LINESeedSansTH_W_Th.woff2') format('woff2');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'LINE Seed Sans TH';
+  src: url('/fonts/LINESeedSansTH_W_Rg.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'LINE Seed Sans TH';
+  src: url('/fonts/LINESeedSansTH_W_Bd.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'LINE Seed Sans TH';
+  src: url('/fonts/LINESeedSansTH_W_He.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'LINE Seed Sans TH';
+  src: url('/fonts/LINESeedSansTH_W_XBd.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    font-family: 'LINE Seed Sans TH', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: #FAFAF8;
+    color: #1C1C1C;
+    margin: 0;
+    padding: 0;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #F2E8DE;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #D6CDC6;
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #8A7B70;
+  }
+}
+
+@layer components {
+  .emma-card {
+    @apply bg-white border border-emma-border rounded-2xl shadow-emma;
+  }
+
+  .emma-heading {
+    @apply font-playfair font-semibold text-emma-black;
+  }
+
+  .emma-label {
+    @apply font-inter text-sm font-medium uppercase tracking-widest text-emma-grey-dark;
+  }
+
+  .emma-value {
+    @apply font-playfair font-semibold text-emma-black;
+  }
+
+  .emma-btn {
+    @apply inline-flex items-center gap-2 px-4 py-2 text-sm font-inter font-medium
+           border border-emma-border text-emma-grey-dark hover:border-emma-gold
+           hover:text-emma-gold-dark transition-all duration-200 rounded-xl;
+  }
+
+  .emma-btn-gold {
+    @apply inline-flex items-center gap-2 px-4 py-2 text-sm font-inter font-medium
+           bg-emma-gold text-white hover:bg-emma-gold-dark
+           transition-all duration-200 rounded-xl;
+  }
+
+  .circle-motif {
+    @apply absolute rounded-full border border-emma-gold-light opacity-20 pointer-events-none;
+  }
+}
+
+/* Recharts overrides */
+.recharts-tooltip-wrapper {
+  outline: none;
+}
+
+.recharts-default-tooltip {
+  border: 1px solid #EBE3DB !important;
+  border-radius: 14px !important;
+  box-shadow: 0 4px 12px rgba(28,28,28,0.08) !important;
+}
+
+/* Smooth page transitions */
+.page-enter {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.page-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 300ms ease, transform 300ms ease;
+}
